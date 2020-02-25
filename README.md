@@ -27,8 +27,10 @@
   - [Example: Reading `JSON` from
     `localStorage`](#example-reading-json-from-localstorage)
 - [Generics](#generics)
-  - [Double Generic with Closure and No Arguments
-    Needed](#double-generic-with-closure-and-no-arguments-needed)
+  - [Example With and Without Type Argument
+    Inference](#example-with-and-without-type-argument-inference)
+  - [Example Using Two Type
+    Parameters](#example-using-two-type-parameters)
 - [Discriminated Unions](#discriminated-unions)
   - [Example with `exhaustive Pattern Matching` Using
     `never`](#example-with-exhaustive-pattern-matching-using-never)
