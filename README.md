@@ -40,7 +40,7 @@
 - [Assertion Functions](#assertion-functions)
   - [Problem: Doesn’t work for Type
     Checking](#problem-doesnt-work-for-type-checking)
-  - [Solution: Not convenient](#solution-not-convenient)
+  - [Solution: Not Convenient](#solution-not-convenient)
   - [Better Solution: Assertion Function Style 1 - Check for a
     Condition](#better-solution-assertion-function-style-1---check-for-a-condition)
   - [Better Solution: Assertion Function Style 2 - Tell Typescript
