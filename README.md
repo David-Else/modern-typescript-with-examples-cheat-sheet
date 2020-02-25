@@ -512,16 +512,20 @@ function tryDeserializeLocalStorageItem(key: string): Result {
 
 # Generics
 
+## Example With and Without Type Argument Inference
+
 ```ts
 function identity<T>(arg: T): T {
   return arg;
 }
 
 let output = identity<string>("myString"); // type of output will be 'string'
-let output = identity("myString"); // type argument inference – the compiler sets the value of T based on the type of the argument we pass in
+let output = identity("myString"); // The compiler sets the value of `T` based on the type of the argument we pass in
 ```
 
-## Double Generic with Closure and No Arguments Needed
+## Example Using Two Type Parameters
+
+No value arguments are needed in this case.
 
 ```ts
 function makePair<F, S>() {
