@@ -1,54 +1,54 @@
-  - [**Modern Typescript with Examples Cheat
-    Sheet**](#modern-typescript-with-examples-cheat-sheet)
-  - [Typing Objects](#typing-objects)
-      - [Members of Interfaces and Object Type
-        Literals](#members-of-interfaces-and-object-type-literals)
-      - [Type Literal Syntax](#type-literal-syntax)
-      - [Index Signature Additional
-        Rules](#index-signature-additional-rules)
-      - [Optional `?` and `readonly`
-        Properties](#optional-and-readonly-properties)
-      - [⛔ Interfaces with Excess Properties
-        (Inconsistency)](#interfaces-with-excess-properties-inconsistency)
-  - [Mapped Types - Getting Types from Data Using `typeof` /
-    `keyof`](#mapped-types---getting-types-from-data-using-typeof-keyof)
-      - [Examples](#examples)
-      - [Advanced Example](#advanced-example)
-  - [Immutability](#immutability)
-      - [`readonly` Array / Tuple](#readonly-array-tuple)
-      - [`readonly` Properties](#readonly-properties)
-      - [`readonly` Class Properties](#readonly-class-properties)
-      - [`const` Assertions](#const-assertions)
-  - [Strict Mode](#strict-mode)
-      - [Non-Nullable Types](#non-nullable-types)
-      - [Strict Class Property
-        Initialization](#strict-class-property-initialization)
-  - [Unknown Type](#unknown-type)
-      - [Example: Reading `JSON` from
-        `localStorage`](#example-reading-json-from-localstorage)
-  - [Generics](#generics)
-      - [Double Generic with Closure and No Arguments
-        Needed](#double-generic-with-closure-and-no-arguments-needed)
-  - [Discriminated Unions](#discriminated-unions)
-      - [Example with `exhaustive Pattern Matching` Using
-        `never`](#example-with-exhaustive-pattern-matching-using-never)
-  - [Optional Chaining: `?.` return `undefined` when hitting a `null` or
-    `undefined`](#optional-chaining-.-return-undefined-when-hitting-a-null-or-undefined)
-  - [Nullish Coalescing: `??` “fall Back” to a Default Value When
-    Dealing with `null` or
-    `undefined`](#nullish-coalescing-fall-back-to-a-default-value-when-dealing-with-null-or-undefined)
-  - [Assertion Functions](#assertion-functions)
-      - [Problem: Doesn’t work for Type
-        Checking](#problem-doesnt-work-for-type-checking)
-      - [Solution: Not convenient](#solution-not-convenient)
-      - [Better Solution: Assertion Function Style 1 - Check for a
-        Condition](#better-solution-assertion-function-style-1---check-for-a-condition)
-      - [Better Solution: Assertion Function Style 2 - Tell Typescript
-        That a Specific Variable or Property Has a Different
-        Type](#better-solution-assertion-function-style-2---tell-typescript-that-a-specific-variable-or-property-has-a-different-type)
-  - [Advanced Examples](#advanced-examples)
-      - [Generic Higher Order Function Example with `Parameters<T>` and
-        `ReturnType<T>`](#generic-higher-order-function-example-with-parameterst-and-returntypet)
+- [**Modern Typescript with Examples Cheat
+  Sheet**](#modern-typescript-with-examples-cheat-sheet)
+- [Typing Objects](#typing-objects)
+  - [Members of Interfaces and Object Type
+    Literals](#members-of-interfaces-and-object-type-literals)
+  - [Type Literal Syntax](#type-literal-syntax)
+  - [Index Signature Additional
+    Rules](#index-signature-additional-rules)
+  - [Optional `?` and `readonly`
+    Properties](#optional-and-readonly-properties)
+  - [⛔ Interfaces with Excess Properties
+    (Inconsistency)](#interfaces-with-excess-properties-inconsistency)
+- [Mapped Types - Getting Types from Data Using `typeof` /
+  `keyof`](#mapped-types---getting-types-from-data-using-typeof-keyof)
+  - [Examples](#examples)
+  - [Advanced Example](#advanced-example)
+- [Immutability](#immutability)
+  - [`readonly` Array / Tuple](#readonly-array-tuple)
+  - [`readonly` Properties](#readonly-properties)
+  - [`readonly` Class Properties](#readonly-class-properties)
+  - [`const` Assertions](#const-assertions)
+- [Strict Mode](#strict-mode)
+  - [Non-Nullable Types](#non-nullable-types)
+  - [Strict Class Property
+    Initialization](#strict-class-property-initialization)
+- [Unknown Type](#unknown-type)
+  - [Example: Reading `JSON` from
+    `localStorage`](#example-reading-json-from-localstorage)
+- [Generics](#generics)
+  - [Double Generic with Closure and No Arguments
+    Needed](#double-generic-with-closure-and-no-arguments-needed)
+- [Discriminated Unions](#discriminated-unions)
+  - [Example with `exhaustive Pattern Matching` Using
+    `never`](#example-with-exhaustive-pattern-matching-using-never)
+- [Optional Chaining: `?.` return `undefined` when hitting a `null` or
+  `undefined`](#optional-chaining-.-return-undefined-when-hitting-a-null-or-undefined)
+- [Nullish Coalescing: `??` “fall Back” to a Default Value When
+  Dealing with `null` or
+  `undefined`](#nullish-coalescing-fall-back-to-a-default-value-when-dealing-with-null-or-undefined)
+- [Assertion Functions](#assertion-functions)
+  - [Problem: Doesn’t work for Type
+    Checking](#problem-doesnt-work-for-type-checking)
+  - [Solution: Not convenient](#solution-not-convenient)
+  - [Better Solution: Assertion Function Style 1 - Check for a
+    Condition](#better-solution-assertion-function-style-1---check-for-a-condition)
+  - [Better Solution: Assertion Function Style 2 - Tell Typescript
+    That a Specific Variable or Property Has a Different
+    Type](#better-solution-assertion-function-style-2---tell-typescript-that-a-specific-variable-or-property-has-a-different-type)
+- [Advanced Examples](#advanced-examples)
+  - [Generic Higher Order Function Example with `Parameters<T>` and
+    `ReturnType<T>`](#generic-higher-order-function-example-with-parameterst-and-returntypet)
 
 # **Modern Typescript with Examples Cheat Sheet**
 
@@ -56,7 +56,7 @@
 
 ## Members of Interfaces and Object Type Literals
 
-``` ts
+```ts
 interface ExampleInterface {
   // Property signature
   myProperty: boolean;
@@ -80,7 +80,7 @@ interface ExampleInterface {
 
 Typically used in the signature of a higher-order function
 
-``` ts
+```ts
 type MyFunctionType = (name: string) => number;
 ```
 
@@ -91,7 +91,7 @@ signatures in an interface, then the type of the index property value
 must also be a supertype of the type of the property value and/or
 method.
 
-``` ts
+```ts
 interface I1 {
   [key: string]: boolean;
 
@@ -110,7 +110,7 @@ interface I2 {
 
 ## Optional `?` and `readonly` Properties
 
-``` ts
+```ts
 interface Name {
   readonly first: string;
   middle?: string;
@@ -124,7 +124,7 @@ interface Name {
 
 ## ⛔ Interfaces with Excess Properties (Inconsistency)
 
-``` ts
+```ts
 interface Dog {
   breed: string;
 }
@@ -151,7 +151,7 @@ printDog({
 > create a `Dog` you don’t need to explicitly extend the `Dog`
 > interface. Instead any object with a `breed` property that is of type
 > `string` can be used as a `Dog`.
-> 
+>
 > Engineers can’t just think of interfaces as “objects that have exactly
 > a set of properties” or “objects that have at least a set of
 > properties”. They have to consider that **inline** object arguments
@@ -162,7 +162,7 @@ printDog({
 
 ## Examples
 
-``` ts
+```ts
 const data = {
   value: 123,
   text: "text"
@@ -175,7 +175,7 @@ type Data = typeof data;
 // }
 ```
 
-``` ts
+```ts
 const data = {
   value: 123,
   text: "text",
@@ -193,13 +193,13 @@ type Data = typeof data;
 }
 ```
 
-``` ts
+```ts
 const data = ["text 1", "text 2"] as const;
 type Data = typeof data[number];
 // type Data = "text 1" | "text 2"
 ```
 
-``` ts
+```ts
 const locales = [
   {
     locale: "se",
@@ -214,7 +214,7 @@ type Locale = typeof locales[number]["locale"];
 // type Locale = "se" | "en"
 ```
 
-``` ts
+```ts
 const currencySymbols = {
   GBP: "£",
   USD: "$",
@@ -226,7 +226,7 @@ type CurrencySymbol = keyof typeof currencySymbols;
 
 ## Advanced Example
 
-``` ts
+```ts
 interface HasPhoneNumber {
   name: string;
   phone: number;
@@ -262,7 +262,7 @@ type AllCommValues = CommunicationMethods[keyof CommunicationMethods];
 
 ## `readonly` Array / Tuple
 
-``` ts
+```ts
 const array: readonly string[];
 const tuple: readonly [string, string];
 ```
@@ -272,7 +272,7 @@ const tuple: readonly [string, string];
 Properties marked with `readonly` can only be assigned to during
 initialization or from within a constructor of the same class.
 
-``` ts
+```ts
 type Point = {
   readonly x: number;
   readonly y: number;
@@ -300,7 +300,7 @@ function moveX(p: Point, offset: number): Point {
 Gettable area property is implicitly read-only because there’s no
 setter:
 
-``` ts
+```ts
 class Circle {
   readonly radius: number;
 
@@ -316,27 +316,27 @@ class Circle {
 
 ## `const` Assertions
 
-``` ts
+```ts
 // Type '10'
 let x = 10 as const;
 ```
 
-  - array literals become `readonly` tuples
+- array literals become `readonly` tuples
 
 <!-- end list -->
 
-``` ts
+```ts
 // Type 'readonly [10, 20]'
 let y = [10, 20] as const;
 ```
 
-  - object literals get `readonly` properties
-  - no literal types in that expression should be widened (e.g. no going
-    from `"hello"` to `string`)
+- object literals get `readonly` properties
+- no literal types in that expression should be widened (e.g. no going
+  from `"hello"` to `string`)
 
 <!-- end list -->
 
-``` ts
+```ts
 // Type '{ readonly text: "hello" }'
 let z = { text: "hello" } as const;
 ```
@@ -344,7 +344,7 @@ let z = { text: "hello" } as const;
 ⛔ `const` contexts **don’t** immediately convert an expression to be
 fully immutable.
 
-``` ts
+```ts
 let arr = [1, 2, 3, 4];
 
 let foo = {
@@ -364,14 +364,14 @@ foo.contents.push(5); // ...works!
 
 `--strictNullChecks`
 
-``` ts
+```ts
 let name: string;
 name = "Marius"; // OK
 name = null; // Error
 name = undefined; // Error
 ```
 
-``` ts
+```ts
 let name: string | null;
 name = "Marius"; // OK
 name = null; // OK
@@ -380,7 +380,7 @@ name = undefined; // Error
 
 Optional parameter automatically adds `| undefined`
 
-``` ts
+```ts
 type User = {
   firstName: string;
   lastName?: string; // same as `string | undefined`
@@ -389,14 +389,14 @@ type User = {
 
 Type guard needed to check if Object is possibly `null`
 
-``` ts
+```ts
 function getLength(s: string | null) {
   // Error: Object is possibly 'null'.
   return s.length;
 }
 ```
 
-``` ts
+```ts
 function getLength(s: string | null) {
   if (s === null) {
     return 0;
@@ -411,14 +411,14 @@ function getLength(s: string | null) {
 }
 ```
 
-``` ts
+```ts
 function doSomething(callback?: () => void) {
   // Error: Object is possibly 'undefined'.
   callback();
 }
 ```
 
-``` ts
+```ts
 function doSomething(callback?: () => void) {
   if (typeof callback === "function") {
     callback();
@@ -428,7 +428,7 @@ function doSomething(callback?: () => void) {
 
 ## Strict Class Property Initialization
 
-``` ts
+```ts
 class User {
   // Type error: Property 'username' has no initializer
   // and is not definitely assigned in the constructor
@@ -436,7 +436,7 @@ class User {
 }
 ```
 
-``` ts
+```ts
 class User {
   username: string | undefined;
 }
@@ -448,7 +448,7 @@ const username =
   typeof user.username === "string" ? user.username.toLowerCase() : "n/a";
 ```
 
-``` ts
+```ts
 class User {
   username = "n/a";
 }
@@ -459,7 +459,7 @@ const user = new User();
 const username = user.username.toLowerCase();
 ```
 
-``` ts
+```ts
 class User {
   constructor(public username: string) {}
 }
@@ -474,7 +474,7 @@ const username = user.username.toLowerCase();
 
 ## Example: Reading `JSON` from `localStorage`
 
-``` ts
+```ts
 type Result =
   | { success: true; value: unknown }
   | { success: false; error: Error };
@@ -512,7 +512,7 @@ function tryDeserializeLocalStorageItem(key: string): Result {
 
 # Generics
 
-``` ts
+```ts
 function identity<T>(arg: T): T {
   return arg;
 }
@@ -523,7 +523,7 @@ let output = identity("myString"); // type argument inference – the compiler s
 
 ## Double Generic with Closure and No Arguments Needed
 
-``` ts
+```ts
 function makePair<F, S>() {
   let pair: { first: F; second: S };
 
@@ -567,7 +567,7 @@ setPair(1, "y");
 
 ## Example with `exhaustive Pattern Matching` Using `never`
 
-``` ts
+```ts
 interface Square {
   kind: "square";
   size: number;
@@ -611,7 +611,7 @@ function area(s: Shape) {
 Album where the artist, and the artists bio might not be present in the
 data.
 
-``` ts
+```ts
 type AlbumAPIResponse = {
   title: string;
   artist?: {
@@ -637,7 +637,7 @@ const maybeFirstPreviousAlbum = album?.artist?.previousAlbums?.[0];
 Value `foo` will be used when it’s “present”; but when it’s `null` or
 `undefined`, calculate `bar()` in its place.
 
-``` ts
+```ts
 let x = foo ?? bar();
 
 // instead of
@@ -650,7 +650,7 @@ avoids bugs. When `localStorage.volume` is set to `0`, the page will set
 the volume to `0.5` which is unintended. `??` avoids some unintended
 behaviour from `0`, `NaN` and `""` being treated as falsy values.
 
-``` ts
+```ts
 function initializeAudio() {
   let volume = localStorage.volume || 0.5; // Potential bug
 }
@@ -663,7 +663,7 @@ types being passed in.
 
 ### Problem: Doesn’t work for Type Checking
 
-``` ts
+```ts
 function yell(str) {
   assert(typeof str === "string");
 
@@ -673,9 +673,9 @@ function yell(str) {
 }
 ```
 
-### Solution: Not convenient
+### Solution: Not Convenient
 
-``` ts
+```ts
 function yell(str) {
   if (typeof str !== "string") {
     throw new TypeError("str should have been a string.");
@@ -687,7 +687,7 @@ function yell(str) {
 
 ### Better Solution: Assertion Function Style 1 - Check for a Condition
 
-``` ts
+```ts
 function assert(condition: any, msg?: string): asserts condition {
   if (!condition) {
     throw new AssertionError(msg);
@@ -708,7 +708,7 @@ function yell(str) {
 
 Very similar to writing type predicate signatures.
 
-``` ts
+```ts
 function assertIsString(val: any): asserts val is string {
   if (typeof val !== "string") {
     throw new AssertionError("Not a string!");
@@ -731,7 +731,7 @@ function yell(str: any) {
 
 ## Generic Higher Order Function Example with `Parameters<T>` and `ReturnType<T>`
 
-``` ts
+```ts
 // Input a function `<T extends (...args: any[]) => any>`
 // Output a function with same params and return type `:(...funcArgs: Parameters<T>) => ReturnType<T>`
 function logDuration<T extends (...args: any[]) => any>(func: T) {
