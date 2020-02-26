@@ -391,7 +391,7 @@ foo.contents.push(5); // ...works!
 
 `--strictNullChecks`
 
-In strict null checking mode, null and undefined are no longer assignable to every type.
+In strict null checking mode, `null` and `undefined` are no longer assignable to every type.
 
 ```ts
 let name: string;
