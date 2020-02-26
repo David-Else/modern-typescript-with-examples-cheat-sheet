@@ -1,19 +1,21 @@
 - [**Modern Typescript with Examples Cheat
   Sheet**](#modern-typescript-with-examples-cheat-sheet)
 - [Typing Objects](#typing-objects)
-  - [Members of Interfaces and Object Type
-    Literals](#members-of-interfaces-and-object-type-literals)
+  - [Property, Method, Index, Call and Construct
+    signatures](#property-method-index-call-and-construct-signatures)
+    - [Index Signature Additional
+      Rules](#index-signature-additional-rules)
+    - [Using A Construct Signature](#using-a-construct-signature)
   - [Type Literal Syntax](#type-literal-syntax)
-  - [Index Signature Additional
-    Rules](#index-signature-additional-rules)
   - [Optional `?` and `readonly`
     Properties](#optional-and-readonly-properties)
-  - [⛔ Interfaces with Excess Properties
-    (Inconsistency)](#interfaces-with-excess-properties-inconsistency)
-- [Mapped Types - Getting Types from Data Using `typeof` /
-  `keyof`](#mapped-types---getting-types-from-data-using-typeof-keyof)
-  - [Examples](#examples)
-  - [Advanced Example](#advanced-example)
+  - [Excess Properties (⛔
+    Inconsistency)](#excess-properties-inconsistency)
+- [Mapped Types - Getting Types from
+  Data](#mapped-types---getting-types-from-data)
+  - [Using `typeof` / `keyof`](#using-typeof-keyof)
+  - [Using `keyof` with Generics and
+    Interfaces](#using-keyof-with-generics-and-interfaces)
 - [Immutability](#immutability)
   - [`readonly` Array / Tuple](#readonly-array-tuple)
   - [`readonly` Properties](#readonly-properties)
@@ -27,13 +29,15 @@
   - [Example: Reading `JSON` from
     `localStorage`](#example-reading-json-from-localstorage)
 - [Generics](#generics)
-  - [Example With and Without Type Argument
-    Inference](#example-with-and-without-type-argument-inference)
-  - [Example Using Two Type
-    Parameters](#example-using-two-type-parameters)
+  - [`<T>` With and Without Type Argument
+    Inference](#t-with-and-without-type-argument-inference)
+  - [`<F, S>` - Using More Than One Type
+    Argument](#f-s---using-more-than-one-type-argument)
+  - [Higher Order Function with `Parameters<T>` and
+    `ReturnType<T>`](#higher-order-function-with-parameterst-and-returntypet)
 - [Discriminated Unions](#discriminated-unions)
-  - [Example with `exhaustive Pattern Matching` Using
-    `never`](#example-with-exhaustive-pattern-matching-using-never)
+  - [Exhaustive Pattern Matching Using
+    `never`](#exhaustive-pattern-matching-using-never)
 - [Optional Chaining: `?.` return `undefined` when hitting a `null` or
   `undefined`](#optional-chaining-.-return-undefined-when-hitting-a-null-or-undefined)
 - [Nullish Coalescing: `??` “fall Back” to a Default Value When
@@ -48,15 +52,12 @@
   - [Better Solution: Assertion Function Style 2 - Tell Typescript
     That a Specific Variable or Property Has a Different
     Type](#better-solution-assertion-function-style-2---tell-typescript-that-a-specific-variable-or-property-has-a-different-type)
-- [Advanced Examples](#advanced-examples)
-  - [Generic Higher Order Function Example with `Parameters<T>` and
-    `ReturnType<T>`](#generic-higher-order-function-example-with-parameterst-and-returntypet)
 
 # **Modern Typescript with Examples Cheat Sheet**
 
 # Typing Objects
 
-## Members of Interfaces and Object Type Literals
+## Property, Method, Index, Call and Construct signatures
 
 ```ts
 interface ExampleInterface {
@@ -65,7 +66,7 @@ interface ExampleInterface {
   callback: MyFunctionType;
 
   // Method signature
-  myMethod(x: string): void; // parameters (x) document how things work, but have no other purpose.
+  myMethod(x: string): void; // parameters (x) document how things work, but have no other purpose
 
   // Index signature
   [prop: string]: any; // help describe Arrays or objects that are used as dictionaries
@@ -74,19 +75,11 @@ interface ExampleInterface {
   (x: number): string; // enable interfaces to describe functions
 
   // Construct signature
-  new (x: string): ExampleInstance; // enable describing classes and constructor functions:
+  new (x: string): ExampleInstance; // enable describing classes and constructor functions
 }
 ```
 
-## Type Literal Syntax
-
-Typically used in the signature of a higher-order function
-
-```ts
-type MyFunctionType = (name: string) => number;
-```
-
-## Index Signature Additional Rules
+### Index Signature Additional Rules
 
 If there are both an index signature and property and/or method
 signatures in an interface, then the type of the index property value
@@ -110,6 +103,53 @@ interface I2 {
 }
 ```
 
+### Using A Construct Signature
+
+A class has two types: the type of the static side and the type of the
+instance side. The constructor sits in the static side, when a class
+implements an interface, only the instance side of the class is checked.
+
+```ts
+interface ClockInterface {
+  tick(): void;
+}
+interface ClockConstructor {
+  new (hour: number, minute: number): ClockInterface;
+}
+
+// Using Class Expression
+const ClockA: ClockConstructor = class Clock implements ClockInterface {
+  constructor(h: number, m: number) {}
+  tick() {}
+};
+
+let clockClassExpression = new ClockA(18, 11);
+
+// Using Class Declaration with a Constructor Function
+class ClockB implements ClockInterface {
+  constructor(h: number, m: number) {}
+  tick() {}
+}
+
+function createClock(
+  ctor: ClockConstructor,
+  hour: number,
+  minute: number
+): ClockInterface {
+  return new ctor(hour, minute);
+}
+
+let clockClassDeclaration = createClock(ClockB, 12, 17);
+```
+
+## Type Literal Syntax
+
+Typically used in the signature of a higher-order function
+
+```ts
+type MyFunctionType = (name: string) => number;
+```
+
 ## Optional `?` and `readonly` Properties
 
 ```ts
@@ -124,7 +164,7 @@ interface Name {
 
 </div>
 
-## ⛔ Interfaces with Excess Properties (Inconsistency)
+## Excess Properties (⛔ Inconsistency)
 
 ```ts
 interface Dog {
@@ -160,22 +200,9 @@ printDog({
 > receive an **additional level of validation** that doesn’t apply when
 > they’re **passed as variables**.
 
-# Mapped Types - Getting Types from Data Using `typeof` / `keyof`
+# Mapped Types - Getting Types from Data
 
-## Examples
-
-```ts
-const data = {
-  value: 123,
-  text: "text"
-};
-
-type Data = typeof data;
-// type Data = {
-// value: number;
-// text: string;
-// }
-```
+## Using `typeof` / `keyof`
 
 ```ts
 const data = {
@@ -226,7 +253,7 @@ type CurrencySymbol = keyof typeof currencySymbols;
 // type CurrencySymbol = "GBP" | "USD" | "EUR"
 ```
 
-## Advanced Example
+## Using `keyof` with Generics and Interfaces
 
 ```ts
 interface HasPhoneNumber {
@@ -380,13 +407,34 @@ name = null; // OK
 name = undefined; // Error
 ```
 
-Optional parameter automatically adds `| undefined`
+Optional parameter `?` automatically adds `| undefined`
 
 ```ts
 type User = {
   firstName: string;
   lastName?: string; // same as `string | undefined`
 };
+```
+
+In JavaScript, every function parameter is optional, when left off their
+value is `undefined`. We can get this functionality in TypeScript by
+adding a `?` to the end of parameters we want to be optional. This is
+different from adding `| undefined` which requires the parameter to be
+explicitly passed as `undefined`
+
+```ts
+function fn1(x: number | undefined): void {
+  x;
+}
+
+function fn2(x?: number): void {
+  x;
+}
+
+fn1(); // Error
+fn2(); // OK
+fn1(undefined); // OK
+fn2(undefined); // OK
 ```
 
 Type guard needed to check if Object is possibly `null`
@@ -514,7 +562,7 @@ function tryDeserializeLocalStorageItem(key: string): Result {
 
 # Generics
 
-## Example With and Without Type Argument Inference
+## `<T>` With and Without Type Argument Inference
 
 ```ts
 function identity<T>(arg: T): T {
@@ -525,7 +573,7 @@ let output = identity<string>("myString"); // type of output will be 'string'
 let output = identity("myString"); // The compiler sets the value of `T` based on the type of the argument we pass in
 ```
 
-## Example Using Two Type Parameters
+## `<F, S>` - Using More Than One Type Argument
 
 No value arguments are needed in this case.
 
@@ -552,6 +600,32 @@ const { getPair, setPair } = makePair<number, string>();
 setPair(1, "y");
 ```
 
+## Higher Order Function with `Parameters<T>` and `ReturnType<T>`
+
+```ts
+// Input a function `<T extends (...args: any[]) => any>`
+// Output a function with same params and return type `:(...funcArgs: Parameters<T>) => ReturnType<T>`
+function logDuration<T extends (...args: any[]) => any>(func: T) {
+  const funcName = func.name;
+
+  // Return a new function that tracks how long the original took
+  return (...args: Parameters<T>): ReturnType<T> => {
+    console.time(funcName);
+    const results = func(...args);
+    console.timeEnd(funcName);
+    return results;
+  };
+}
+
+function addNumbers(a: number, b: number): number {
+  return a + b;
+}
+// Hover over is `addNumbersWithLogging: (a: number, b: number) => number`
+const addNumbersWithLogging = logDuration(addNumbers);
+
+addNumbersWithLogging(5, 3);
+```
+
 # Discriminated Unions
 
 > The code doesn’t compile if you don’t cover every possibility: this is
@@ -571,7 +645,7 @@ setPair(1, "y");
 > be possible to implement a system ‘either way’, which you go with is a
 > design decision: neither is inherently better.
 
-## Example with `exhaustive Pattern Matching` Using `never`
+## Exhaustive Pattern Matching Using `never`
 
 ```ts
 interface Square {
@@ -731,32 +805,4 @@ function yell(str: any) {
   // error: Property 'toUppercase' does not exist on type 'string'.
   //        Did you mean 'toUpperCase'?
 }
-```
-
-# Advanced Examples
-
-## Generic Higher Order Function Example with `Parameters<T>` and `ReturnType<T>`
-
-```ts
-// Input a function `<T extends (...args: any[]) => any>`
-// Output a function with same params and return type `:(...funcArgs: Parameters<T>) => ReturnType<T>`
-function logDuration<T extends (...args: any[]) => any>(func: T) {
-  const funcName = func.name;
-
-  // Return a new function that tracks how long the original took
-  return (...args: Parameters<T>): ReturnType<T> => {
-    console.time(funcName);
-    const results = func(...args);
-    console.timeEnd(funcName);
-    return results;
-  };
-}
-
-function addNumbers(a: number, b: number): number {
-  return a + b;
-}
-// Hover over is `addNumbersWithLogging: (a: number, b: number) => number`
-const addNumbersWithLogging = logDuration(addNumbers);
-
-addNumbersWithLogging(5, 3);
 ```
