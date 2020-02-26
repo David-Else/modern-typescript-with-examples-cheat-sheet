@@ -38,20 +38,23 @@
 - [Discriminated Unions](#discriminated-unions)
   - [Exhaustive Pattern Matching Using
     `never`](#exhaustive-pattern-matching-using-never)
-- [Optional Chaining: `?.` return `undefined` when hitting a `null` or
-  `undefined`](#optional-chaining-.-return-undefined-when-hitting-a-null-or-undefined)
-- [Nullish Coalescing: `??` “fall Back” to a Default Value When
-  Dealing with `null` or
-  `undefined`](#nullish-coalescing-fall-back-to-a-default-value-when-dealing-with-null-or-undefined)
+- [Optional Chaining](#optional-chaining)
+  - [`?.` returns `undefined` when hitting a `null` or
+    `undefined`](#returns-undefined-when-hitting-a-null-or-undefined)
+- [Nullish Coalescing](#nullish-coalescing)
+  - [`??` “fall Backs” to a Default Value When Dealing with `null`
+    or
+    `undefined`](#fall-backs-to-a-default-value-when-dealing-with-null-or-undefined)
 - [Assertion Functions](#assertion-functions)
-  - [Problem: Doesn’t work for Type
-    Checking](#problem-doesnt-work-for-type-checking)
-  - [Solution: Not Convenient](#solution-not-convenient)
-  - [Better Solution: Assertion Function Style 1 - Check for a
-    Condition](#better-solution-assertion-function-style-1---check-for-a-condition)
-  - [Better Solution: Assertion Function Style 2 - Tell Typescript
-    That a Specific Variable or Property Has a Different
-    Type](#better-solution-assertion-function-style-2---tell-typescript-that-a-specific-variable-or-property-has-a-different-type)
+  - [A Standard JavaScript `Assert()` Doesn’t Work for Type
+    Checking](#a-standard-javascript-assert-doesnt-work-for-type-checking)
+  - [Using `if` and `typeof` Everywhere is
+    Bloat](#using-if-and-typeof-everywhere-is-bloat)
+  - [Assertion Function Style 1 - Check for a
+    Condition](#assertion-function-style-1---check-for-a-condition)
+  - [Assertion Function Style 2 - Tell Typescript That a Specific
+    Variable or Property Has a Different
+    Type](#assertion-function-style-2---tell-typescript-that-a-specific-variable-or-property-has-a-different-type)
 
 # **Modern Typescript with Examples Cheat Sheet**
 
@@ -745,7 +748,7 @@ function initializeAudio() {
 Assertions in JavaScript are often used to guard against **improper**
 types being passed in.
 
-## A Standard JavaScript `Assert()` Doesn't Work for Type Checking
+## A Standard JavaScript `Assert()` Doesn’t Work for Type Checking
 
 ```ts
 function yell(str) {
