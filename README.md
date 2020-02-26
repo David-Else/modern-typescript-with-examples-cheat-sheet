@@ -169,6 +169,12 @@ interface Name {
 
 ## Excess Properties (⛔ Inconsistency)
 
+TypeScript is a **structurally** typed language. This means that to create a `Dog` you don’t need to explicitly extend the `Dog` interface. Instead any object with a `breed` property that is of type `string` can be used as a `Dog` (see example below).
+
+Engineers **can’t** just think of interfaces as “objects that have exactly a set of properties” or “objects that have at least a set of properties”.
+
+> Inline object arguments receive an additional level of validation that doesn’t apply when they’re passed as variables.
+
 ```ts
 interface Dog {
   breed: string;
@@ -191,17 +197,6 @@ printDog({
 });
 // excess properties are NOT OK!! Argument of type '{ breed: string; age: number; }' is not assignable..
 ```
-
-> TypeScript is a **structurally** typed language. This means that to
-> create a `Dog` you don’t need to explicitly extend the `Dog`
-> interface. Instead any object with a `breed` property that is of type
-> `string` can be used as a `Dog`.
->
-> Engineers can’t just think of interfaces as “objects that have exactly
-> a set of properties” or “objects that have at least a set of
-> properties”. They have to consider that **inline** object arguments
-> receive an **additional level of validation** that doesn’t apply when
-> they’re **passed as variables**.
 
 # Mapped Types - Getting Types from Data
 
