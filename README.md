@@ -391,6 +391,8 @@ foo.contents.push(5); // ...works!
 
 `--strictNullChecks`
 
+In strict null checking mode, null and undefined are no longer assignable to every type.
+
 ```ts
 let name: string;
 name = "Marius"; // OK
@@ -476,13 +478,39 @@ function doSomething(callback?: () => void) {
 
 ## Strict Class Property Initialization
 
+`--strictPropertyInitialization`
+
+Verify that each instance property declared in a class either:
+
+- Has an explicit initializer, or
+- Is definitely assigned to in the constructor
+
 ```ts
+// Error
 class User {
   // Type error: Property 'username' has no initializer
   // and is not definitely assigned in the constructor
   username: string;
 }
+
+// OK
+class User {
+  username = "n/a";
+}
+
+const user = new User();
+const username = user.username.toLowerCase();
+
+// OK
+class User {
+  constructor(public username: string) {}
+}
+
+const user = new User("mariusschulz");
+const username = user.username.toLowerCase();
 ```
+
+- Has a type that includes undefined
 
 ```ts
 class User {
@@ -494,28 +522,6 @@ const user = new User();
 // Whenever we want to use the username property as a string, though, we first have to make sure that it actually holds a string and not the value undefined
 const username =
   typeof user.username === "string" ? user.username.toLowerCase() : "n/a";
-```
-
-```ts
-class User {
-  username = "n/a";
-}
-
-const user = new User();
-
-// OK
-const username = user.username.toLowerCase();
-```
-
-```ts
-class User {
-  constructor(public username: string) {}
-}
-
-const user = new User("mariusschulz");
-
-// OK
-const username = user.username.toLowerCase();
 ```
 
 # Unknown Type
