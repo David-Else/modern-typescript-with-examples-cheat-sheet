@@ -526,6 +526,8 @@ const username =
 
 # Unknown Type
 
+`unknown` is the type-safe counterpart of the `any` type: we have to do some form of checking before performing most operations on values of type `unknown`
+
 ## Example: Reading `JSON` from `localStorage`
 
 ```ts
