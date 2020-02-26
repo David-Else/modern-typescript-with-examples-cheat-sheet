@@ -1,21 +1,14 @@
-- [**Modern Typescript with Examples Cheat
-  Sheet**](#modern-typescript-with-examples-cheat-sheet)
+- [**Modern Typescript with Examples Cheat Sheet**](#modern-typescript-with-examples-cheat-sheet)
 - [Typing Objects](#typing-objects)
-  - [Property, Method, Index, Call and Construct
-    signatures](#property-method-index-call-and-construct-signatures)
-    - [Index Signature Additional
-      Rules](#index-signature-additional-rules)
+  - [Property, Method, Index, Call and Construct signatures](#property-method-index-call-and-construct-signatures)
+    - [Index Signature Supertype Rule](#index-signature-supertype-rule)
     - [Using A Construct Signature](#using-a-construct-signature)
   - [Type Literal Syntax](#type-literal-syntax)
-  - [Optional `?` and `readonly`
-    Properties](#optional-and-readonly-properties)
-  - [Excess Properties (⛔
-    Inconsistency)](#excess-properties-inconsistency)
-- [Mapped Types - Getting Types from
-  Data](#mapped-types---getting-types-from-data)
+  - [Optional `?` and `readonly` Properties](#optional-and-readonly-properties)
+  - [Excess Properties (⛔ Inconsistency)](#excess-properties-inconsistency)
+- [Mapped Types - Getting Types from Data](#mapped-types---getting-types-from-data)
   - [Using `typeof` / `keyof`](#using-typeof-keyof)
-  - [Using `keyof` with Generics and
-    Interfaces](#using-keyof-with-generics-and-interfaces)
+  - [Using `keyof` with Generics and Interfaces](#using-keyof-with-generics-and-interfaces)
 - [Immutability](#immutability)
   - [`readonly` Array / Tuple](#readonly-array-tuple)
   - [`readonly` Properties](#readonly-properties)
@@ -23,38 +16,24 @@
   - [`const` Assertions](#const-assertions)
 - [Strict Mode](#strict-mode)
   - [Non-Nullable Types](#non-nullable-types)
-  - [Strict Class Property
-    Initialization](#strict-class-property-initialization)
+  - [Strict Class Property Initialization](#strict-class-property-initialization)
 - [Unknown Type](#unknown-type)
-  - [Example: Reading `JSON` from
-    `localStorage`](#example-reading-json-from-localstorage)
+  - [Example: Reading `JSON` from `localStorage`](#example-reading-json-from-localstorage)
 - [Generics](#generics)
-  - [`<T>` With and Without Type Argument
-    Inference](#t-with-and-without-type-argument-inference)
-  - [`<F, S>` - Using More Than One Type
-    Argument](#f-s---using-more-than-one-type-argument)
-  - [Higher Order Function with `Parameters<T>` and
-    `ReturnType<T>`](#higher-order-function-with-parameterst-and-returntypet)
+  - [`<T>` With and Without Type Argument Inference](#t-with-and-without-type-argument-inference)
+  - [`<F, S>` - Using More Than One Type Argument](#f-s---using-more-than-one-type-argument)
+  - [Higher Order Function with `Parameters<T>` and `ReturnType<T>`](#higher-order-function-with-parameterst-and-returntypet)
 - [Discriminated Unions](#discriminated-unions)
-  - [Exhaustive Pattern Matching Using
-    `never`](#exhaustive-pattern-matching-using-never)
+  - [Example: Exhaustive Pattern Matching Using `never`](#example-exhaustive-pattern-matching-using-never)
 - [Optional Chaining](#optional-chaining)
-  - [`?.` returns `undefined` when hitting a `null` or
-    `undefined`](#returns-undefined-when-hitting-a-null-or-undefined)
+  - [`?.` returns `undefined` when hitting a `null` or `undefined`](#returns-undefined-when-hitting-a-null-or-undefined)
 - [Nullish Coalescing](#nullish-coalescing)
-  - [`??` “fall Backs” to a Default Value When Dealing with `null`
-    or
-    `undefined`](#fall-backs-to-a-default-value-when-dealing-with-null-or-undefined)
+  - [`??` “fall Backs” to a Default Value When Dealing with `null` or `undefined`](#fall-backs-to-a-default-value-when-dealing-with-null-or-undefined)
 - [Assertion Functions](#assertion-functions)
-  - [A Standard JavaScript `Assert()` Doesn’t Work for Type
-    Checking](#a-standard-javascript-assert-doesnt-work-for-type-checking)
-  - [Using `if` and `typeof` Everywhere is
-    Bloat](#using-if-and-typeof-everywhere-is-bloat)
-  - [Assertion Function Style 1 - Check for a
-    Condition](#assertion-function-style-1---check-for-a-condition)
-  - [Assertion Function Style 2 - Tell Typescript That a Specific
-    Variable or Property Has a Different
-    Type](#assertion-function-style-2---tell-typescript-that-a-specific-variable-or-property-has-a-different-type)
+  - [A Standard JavaScript `Assert()` Doesn’t Work for Type Checking](#a-standard-javascript-assert-doesnt-work-for-type-checking)
+  - [Using `if` and `typeof` Everywhere is Bloat](#using-if-and-typeof-everywhere-is-bloat)
+  - [Assertion Function Style 1 - Check for a Condition](#assertion-function-style-1---check-for-a-condition)
+  - [Assertion Function Style 2 - Tell Typescript That a Specific Variable or Property Has a Different Type](#assertion-function-style-2---tell-typescript-that-a-specific-variable-or-property-has-a-different-type)
 
 # **Modern Typescript with Examples Cheat Sheet**
 
@@ -82,12 +61,11 @@ interface ExampleInterface {
 }
 ```
 
-### Index Signature Additional Rules
+### Index Signature Supertype Rule
 
-If there are both an index signature and property and/or method
-signatures in an interface, then the type of the index property value
-must also be a supertype of the type of the property value and/or
-method.
+If there are both an index signature and property and/or method signatures in an
+interface, then the type of the index property value must also be a supertype of
+the type of the property value and/or method.
 
 ```ts
 interface I1 {
@@ -108,9 +86,9 @@ interface I2 {
 
 ### Using A Construct Signature
 
-A class has two types: the type of the static side and the type of the
-instance side. The constructor sits in the static side, when a class
-implements an interface, only the instance side of the class is checked.
+A class has two types: the type of the static side and the type of the instance
+side. The constructor sits in the static side, when a class implements an
+interface, only the instance side of the class is checked.
 
 ```ts
 interface ClockInterface {
@@ -169,11 +147,16 @@ interface Name {
 
 ## Excess Properties (⛔ Inconsistency)
 
-TypeScript is a **structurally** typed language. This means that to create a `Dog` you don’t need to explicitly extend the `Dog` interface. Instead any object with a `breed` property that is of type `string` can be used as a `Dog` (see example below).
+TypeScript is a **structurally** typed language. This means that to create a
+`Dog` you don’t need to explicitly extend the `Dog` interface. Instead any
+object with a `breed` property that is of type `string` can be used as a `Dog`
+(see example below).
 
-Engineers **can’t** just think of interfaces as “objects that have exactly a set of properties” or “objects that have at least a set of properties”.
+Engineers **can’t** just think of interfaces as “objects that have exactly a set
+of properties” or “objects that have at least a set of properties”.
 
-> Inline object arguments receive an additional level of validation that doesn’t apply when they’re passed as variables.
+> Inline object arguments receive an additional level of validation that doesn’t
+> apply when they’re passed as variables.
 
 ```ts
 interface Dog {
@@ -296,8 +279,8 @@ const tuple: readonly [string, string];
 
 ## `readonly` Properties
 
-Properties marked with `readonly` can only be assigned to during
-initialization or from within a constructor of the same class.
+Properties marked with `readonly` can only be assigned to during initialization
+or from within a constructor of the same class.
 
 ```ts
 type Point = {
@@ -324,8 +307,7 @@ function moveX(p: Point, offset: number): Point {
 
 ## `readonly` Class Properties
 
-Gettable area property is implicitly read-only because there’s no
-setter:
+Gettable area property is implicitly read-only because there’s no setter:
 
 ```ts
 class Circle {
@@ -358,8 +340,8 @@ let y = [10, 20] as const;
 ```
 
 - object literals get `readonly` properties
-- no literal types in that expression should be widened (e.g. no going
-  from `"hello"` to `string`)
+- no literal types in that expression should be widened (e.g. no going from
+  `"hello"` to `string`)
 
 <!-- end list -->
 
@@ -368,8 +350,8 @@ let y = [10, 20] as const;
 let z = { text: "hello" } as const;
 ```
 
-⛔ `const` contexts **don’t** immediately convert an expression to be
-fully immutable.
+⛔ `const` contexts **don’t** immediately convert an expression to be fully
+immutable.
 
 ```ts
 let arr = [1, 2, 3, 4];
@@ -391,7 +373,8 @@ foo.contents.push(5); // ...works!
 
 `--strictNullChecks`
 
-In strict null checking mode, `null` and `undefined` are no longer assignable to every type.
+In strict null checking mode, `null` and `undefined` are no longer assignable to
+every type.
 
 ```ts
 let name: string;
@@ -416,11 +399,11 @@ type User = {
 };
 ```
 
-In JavaScript, every function parameter is optional, when left off their
-value is `undefined`. We can get this functionality in TypeScript by
-adding a `?` to the end of parameters we want to be optional. This is
-different from adding `| undefined` which requires the parameter to be
-explicitly passed as `undefined`
+In JavaScript, every function parameter is optional, when left off their value
+is `undefined`. We can get this functionality in TypeScript by adding a `?` to
+the end of parameters we want to be optional. This is different from adding
+`| undefined` which requires the parameter to be explicitly passed as
+`undefined`
 
 ```ts
 function fn1(x: number | undefined): void {
@@ -485,6 +468,8 @@ Verify that each instance property declared in a class either:
 - Has an explicit initializer, or
 - Is definitely assigned to in the constructor
 
+<!-- end list -->
+
 ```ts
 // Error
 class User {
@@ -512,6 +497,8 @@ const username = user.username.toLowerCase();
 
 - Has a type that includes undefined
 
+<!-- end list -->
+
 ```ts
 class User {
   username: string | undefined;
@@ -526,7 +513,8 @@ const username =
 
 # Unknown Type
 
-`unknown` is the type-safe counterpart of the `any` type: we have to do some form of checking before performing most operations on values of type `unknown`
+`unknown` is the type-safe counterpart of the `any` type: we have to do some
+form of checking before performing most operations on values of type `unknown`
 
 ## Example: Reading `JSON` from `localStorage`
 
@@ -634,24 +622,22 @@ addNumbersWithLogging(5, 3);
 
 # Discriminated Unions
 
-> The code doesn’t compile if you don’t cover every possibility: this is
-> what gives you power. If you can expose your types as a common
-> interface, then using OO features (interfaces/polymorphism) will make
-> your life better by putting type-specific behaviour in the type rather
-> than in the consuming code.
+> The code doesn’t compile if you don’t cover every possibility: this is what
+> gives you power. If you can expose your types as a common interface, then
+> using OO features (interfaces/polymorphism) will make your life better by
+> putting type-specific behaviour in the type rather than in the consuming code.
 
-> It is important to recognise that interfaces and unions are kind of
-> the opposite of each other: an interface defines some stuff the type
-> has to implement, and the union defines some stuff the consumer has to
-> consider. If you add a method to an interface, you have changed that
-> contract, and now every type that previously implemented it needs to
-> be updated. If you add a new type to a union, you have changed that
-> contract, and now every exhaustive pattern matching over the union has
-> to be updated. They fill different roles, and while it may sometimes
-> be possible to implement a system ‘either way’, which you go with is a
-> design decision: neither is inherently better.
+> It is important to recognise that interfaces and unions are kind of the
+> opposite of each other: an interface defines some stuff the type has to
+> implement, and the union defines some stuff the consumer has to consider. If
+> you add a method to an interface, you have changed that contract, and now
+> every type that previously implemented it needs to be updated. If you add a
+> new type to a union, you have changed that contract, and now every exhaustive
+> pattern matching over the union has to be updated. They fill different roles,
+> and while it may sometimes be possible to implement a system ‘either way’,
+> which you go with is a design decision: neither is inherently better.
 
-## Exhaustive Pattern Matching Using `never`
+## Example: Exhaustive Pattern Matching Using `never`
 
 ```ts
 interface Square {
@@ -696,8 +682,7 @@ function area(s: Shape) {
 
 ## `?.` returns `undefined` when hitting a `null` or `undefined`
 
-Album where the artist, and the artists bio might not be present in the
-data.
+Album where the artist, and the artists bio might not be present in the data.
 
 ```ts
 type AlbumAPIResponse = {
@@ -735,10 +720,10 @@ let x = foo ?? bar();
 let x = foo !== null && foo !== undefined ? foo : bar();
 ```
 
-It can replace uses of `||` when trying to use a default value, and
-avoids bugs. When `localStorage.volume` is set to `0`, the page will set
-the volume to `0.5` which is unintended. `??` avoids some unintended
-behaviour from `0`, `NaN` and `""` being treated as falsy values.
+It can replace uses of `||` when trying to use a default value, and avoids bugs.
+When `localStorage.volume` is set to `0`, the page will set the volume to `0.5`
+which is unintended. `??` avoids some unintended behaviour from `0`, `NaN` and
+`""` being treated as falsy values.
 
 ```ts
 function initializeAudio() {
@@ -748,8 +733,8 @@ function initializeAudio() {
 
 # Assertion Functions
 
-Assertions in JavaScript are often used to guard against **improper**
-types being passed in.
+Assertions in JavaScript are often used to guard against **improper** types
+being passed in.
 
 ## A Standard JavaScript `Assert()` Doesn’t Work for Type Checking
 
