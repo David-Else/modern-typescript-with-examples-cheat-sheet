@@ -801,3 +801,13 @@ function yell(str: any) {
   //        Did you mean 'toUpperCase'?
 }
 ```
+
+#### Many thanks to the following sites and people for providing many of the fantastic examples:
+
+[typescriptlang.org](https://www.typescriptlang.org/docs/home.html)
+
+[Marius Schulz - Blog](https://mariusschulz.com/)
+
+[Mike North - TypeScript 3 Fundamentals v2](https://frontendmasters.com/courses/typescript-v2/)
+
+[Shu Uesugi - TypeScript for Beginner Programmers](https://ts.chibicode.com/)
