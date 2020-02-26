@@ -1,8 +1,11 @@
 - [**Modern Typescript with Examples Cheat Sheet**](#modern-typescript-with-examples-cheat-sheet)
 - [Typing Objects](#typing-objects)
-  - [Property, Method, Index, Call and Construct signatures](#property-method-index-call-and-construct-signatures)
-    - [Index Signature Supertype Rule](#index-signature-supertype-rule)
-    - [Using A Construct Signature](#using-a-construct-signature)
+  - [Interface Reference with All Signatures](#interface-reference-with-all-signatures)
+  - [Property Signature](#property-signature)
+  - [Method Signature](#method-signature)
+  - [Index Signature](#index-signature)
+  - [Call Signature](#call-signature)
+  - [Construct Signature](#construct-signature)
   - [Type Literal Syntax](#type-literal-syntax)
   - [Optional `?` and `readonly` Properties](#optional-and-readonly-properties)
   - [Excess Properties (⛔ Inconsistency)](#excess-properties-inconsistency)
@@ -39,29 +42,45 @@
 
 # Typing Objects
 
-## Property, Method, Index, Call and Construct signatures
+## Interface Reference with All Signatures
 
 ```ts
 interface ExampleInterface {
-  // Property signature
-  myProperty: boolean;
-  callback: MyFunctionType;
-
-  // Method signature
-  myMethod(x: string): void; // parameters (x) document how things work, but have no other purpose
-
-  // Index signature
-  [prop: string]: any; // help describe Arrays or objects that are used as dictionaries
-
-  // Call signature
-  (x: number): string; // enable interfaces to describe functions
-
-  // Construct signature
-  new (x: string): ExampleInstance; // enable describing classes and constructor functions
+  callback: MyFunctionType; // Property signature
+  myMethod(x: string): void; // Method signature
+  [prop: string]: any; // Index signature
+  (x: number): string; // Call signature
+  new (x: string): ExampleInstance; // Construct signature
 }
 ```
 
-### Index Signature Supertype Rule
+## Property Signature
+
+```ts
+interface ExampleInterface {
+  myProperty: boolean;
+}
+```
+
+## Method Signature
+
+Parameters (x) document how things work, but have no other purpose
+
+```ts
+interface ExampleInterface {
+  myMethod(x: string): void;
+}
+```
+
+## Index Signature
+
+Help describe Arrays or objects that are used as dictionaries
+
+```ts
+interface ExampleInterface {
+  [prop: string]: any;
+}
+```
 
 If there are both an index signature and property and/or method signatures in an
 interface, then the type of the index property value must also be a supertype of
@@ -84,7 +103,32 @@ interface I2 {
 }
 ```
 
-### Using A Construct Signature
+## Call Signature
+
+Enable interfaces to describe functions, `this` is the optional calling context
+of the function in this example:
+
+```ts
+interface ExampleInterface {
+  (this: Window, e: MouseEvent): void;
+}
+
+const myListener: ExampleInterface = e => {
+  console.log("mouse clicked!", e);
+};
+
+addEventListener("click", myListener);
+```
+
+## Construct Signature
+
+Enable describing classes and constructor functions
+
+```ts
+interface ExampleInterface {
+  new (x: string): ExampleInstance;
+}
+```
 
 A class has two types: the type of the static side and the type of the instance
 side. The constructor sits in the static side, when a class implements an
@@ -324,6 +368,10 @@ class Circle {
 ```
 
 ## `const` Assertions
+
+- `number` becomes number literal
+
+<!-- end list -->
 
 ```ts
 // Type '10'
