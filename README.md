@@ -802,7 +802,7 @@ function yell(str: any) {
 }
 ```
 
-#### Many thanks to the following sites and people for providing many of the fantastic examples:
+#### Thanks to the following sites and people for providing many of the fantastic examples:
 
 [typescriptlang.org](https://www.typescriptlang.org/docs/home.html)
 
