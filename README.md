@@ -113,11 +113,11 @@ Enable interfaces to describe functions, `this` is the optional calling context
 of the function in this example:
 
 ```ts
-interface ExampleInterface {
+interface ClickListener {
   (this: Window, e: MouseEvent): void;
 }
 
-const myListener: ExampleInterface = e => {
+const myListener: ClickListener = e => {
   console.log("mouse clicked!", e);
 };
 
