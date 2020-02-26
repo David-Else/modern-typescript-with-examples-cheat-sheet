@@ -686,7 +686,9 @@ function area(s: Shape) {
 }
 ```
 
-# Optional Chaining: `?.` return `undefined` when hitting a `null` or `undefined`
+# Optional Chaining
+
+## `?.` returns `undefined` when hitting a `null` or `undefined`
 
 Album where the artist, and the artists bio might not be present in the
 data.
@@ -712,7 +714,9 @@ const maybeArtistBioElement = album?.["artist"]?.["bio"];
 const maybeFirstPreviousAlbum = album?.artist?.previousAlbums?.[0];
 ```
 
-# Nullish Coalescing: `??` “fall Back” to a Default Value When Dealing with `null` or `undefined`
+# Nullish Coalescing
+
+## `??` “fall Backs” to a Default Value When Dealing with `null` or `undefined`
 
 Value `foo` will be used when it’s “present”; but when it’s `null` or
 `undefined`, calculate `bar()` in its place.
@@ -741,7 +745,7 @@ function initializeAudio() {
 Assertions in JavaScript are often used to guard against **improper**
 types being passed in.
 
-### Problem: Doesn’t work for Type Checking
+## A Standard JavaScript `Assert()` Doesn't Work for Type Checking
 
 ```ts
 function yell(str) {
@@ -753,7 +757,7 @@ function yell(str) {
 }
 ```
 
-### Solution: Not Convenient
+## Using `if` and `typeof` Everywhere is Bloat
 
 ```ts
 function yell(str) {
@@ -765,7 +769,7 @@ function yell(str) {
 }
 ```
 
-### Better Solution: Assertion Function Style 1 - Check for a Condition
+## Assertion Function Style 1 - Check for a Condition
 
 ```ts
 function assert(condition: any, msg?: string): asserts condition {
@@ -784,7 +788,7 @@ function yell(str) {
 }
 ```
 
-### Better Solution: Assertion Function Style 2 - Tell Typescript That a Specific Variable or Property Has a Different Type
+## Assertion Function Style 2 - Tell Typescript That a Specific Variable or Property Has a Different Type
 
 Very similar to writing type predicate signatures.
 
