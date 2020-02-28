@@ -43,11 +43,34 @@
 
 # Typing Objects
 
+## `Object` vs `object`
+
+`Object` is the type of all instances of class `Object`
+
+- It describes functionality that is common to all JavaScript objects
+- It includes primitive values
+
+```ts
+const obj1 = {};
+obj1 instanceof Object; // true
+obj1.toString === Object.prototype.toString; // true
+
+function fn(x: Object) {}
+fn("foo"); // OK
+```
+
+`object` is the type of all non-primitive values
+
+```ts
+function fn(x: object) {}
+fn("foo"); // Error: "foo" is a primitive
+```
+
 ## Interface with All Signatures, `?` and `readonly` Properties
 
 ```ts
 interface ExampleInterface {
-  callback: MyFunctionType; // Property signature
+  myProperty: boolean; // Property signature
   myMethod(x: string): void; // Method signature
   [prop: string]: any; // Index signature
   (x: number): string; // Call signature
@@ -868,3 +891,5 @@ function yell(str: any) {
 [Mike North - TypeScript 3 Fundamentals v2](https://frontendmasters.com/courses/typescript-v2/)
 
 [Shu Uesugi - TypeScript for Beginner Programmers](https://ts.chibicode.com/)
+
+[Dr. Axel Rauschmayer - 2ality](https://2ality.com/index.html)
