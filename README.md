@@ -191,11 +191,10 @@ type MyFunctionType = (name: string) => number;
 
 ## Excess Properties (⛔ Inconsistency)
 
-In-line object arguments receive an additional level of validation that doesn’t
-apply when they’re passed as variables.
-
 - Engineers **can’t** just think of interfaces as “objects that have exactly a
-  set of properties” or “objects that have at least a set of properties”
+  set of properties” or “objects that have at least a set of properties”.
+  In-line object arguments receive an additional level of validation that
+  doesn’t apply when they’re passed as variables.
 
 - TypeScript is a **structurally** typed language. To create a `Dog` you don’t
   need to explicitly extend the `Dog` interface, any object with a `breed`
