@@ -1,17 +1,15 @@
 - [**Modern Typescript with Examples Cheat Sheet**](#modern-typescript-with-examples-cheat-sheet)
 - [Typing Objects](#typing-objects)
-  - [`Object` vs `object`](#object-vs-object)
-  - [Interface with All Signatures, `?` and `readonly` Properties](#interface-with-all-signatures-and-readonly-properties)
-  - [Property Signature](#property-signature)
-  - [Method Signature](#method-signature)
+  - [`Object` Versus `object`](#object-versus-object)
+  - [Interface Signatures Overview](#interface-signatures-overview)
   - [Index Signature](#index-signature)
   - [Call Signature](#call-signature)
   - [Construct Signature](#construct-signature)
   - [Type Literal Syntax](#type-literal-syntax)
   - [Excess Properties (⛔ Inconsistency)](#excess-properties-inconsistency)
 - [Mapped Types - Getting Types from Data](#mapped-types---getting-types-from-data)
-  - [Using `typeof` / `keyof`](#using-typeof-keyof)
-  - [Using `keyof` with Generics and Interfaces](#using-keyof-with-generics-and-interfaces)
+  - [`typeof` / `keyof` Examples](#typeof-keyof-examples)
+  - [`keyof` with Generics and Interfaces Example](#keyof-with-generics-and-interfaces-example)
 - [Immutability](#immutability)
   - [`readonly` Array / Tuple](#readonly-array-tuple)
   - [`readonly` Properties](#readonly-properties)
@@ -22,7 +20,7 @@
   - [Strict Class Property Initialization](#strict-class-property-initialization)
 - [Types](#types)
   - [`unknown`](#unknown)
-    - [Reading `JSON` from `localStorage` using `unknown`](#reading-json-from-localstorage-using-unknown)
+    - [Reading `JSON` from `localStorage` using `unknown` Example](#reading-json-from-localstorage-using-unknown-example)
   - [`never`](#never)
 - [Generics](#generics)
   - [With and Without Type Argument Inference](#with-and-without-type-argument-inference)
@@ -44,9 +42,9 @@
 
 # Typing Objects
 
-## `Object` vs `object`
+## `Object` Versus `object`
 
-`Object` is the type of all instances of class `Object`
+`Object` is the type of all instances of class `Object`.
 
 - It describes functionality that is common to all JavaScript objects
 - It includes primitive values
@@ -62,19 +60,19 @@ function fn(x: Object) {}
 fn("foo"); // OK
 ```
 
-`object` is the type of all non-primitive values
+`object` is the type of all non-primitive values.
 
 ```ts
 function fn(x: object) {}
 fn("foo"); // Error: "foo" is a primitive
 ```
 
-## Interface with All Signatures, `?` and `readonly` Properties
+## Interface Signatures Overview
 
 ```ts
 interface ExampleInterface {
   myProperty: boolean; // Property signature
-  myMethod(x: string): void; // Method signature
+  myMethod(x: string): void; // Method signature, ⛔ param names for documentation only
   [prop: string]: any; // Index signature
   (x: number): string; // Call signature
   new (x: string): ExampleInstance; // Construct signature
@@ -84,37 +82,15 @@ interface ExampleInterface {
 }
 ```
 
-## Property Signature
-
-```ts
-interface ExampleInterface {
-  myProperty: boolean;
-}
-```
-
-## Method Signature
-
-Parameters (x) document how things work, but have no other purpose
-
-```ts
-interface ExampleInterface {
-  myMethod(x: string): void;
-}
-```
-
 ## Index Signature
 
-Help describe Arrays or objects that are used as dictionaries
+Helps to describe Arrays or objects that are used as dictionaries.
 
-```ts
-interface ExampleInterface {
-  [prop: string]: any;
-}
-```
+- If there are both an index signature and property and/or method signatures in
+  an interface, then the type of the index property value must also be a
+  supertype of the type of the property value and/or method
 
-If there are both an index signature and property and/or method signatures in an
-interface, then the type of the index property value must also be a supertype of
-the type of the property value and/or method.
+<!-- end list -->
 
 ```ts
 interface I1 {
@@ -135,7 +111,7 @@ interface I2 {
 
 ## Call Signature
 
-Enable interfaces to describe functions, `this` is the optional calling context
+Enables interfaces to describe functions, `this` is the optional calling context
 of the function in this example:
 
 ```ts
@@ -152,7 +128,7 @@ addEventListener("click", myListener);
 
 ## Construct Signature
 
-Enable describing classes and constructor functions
+Enables describing classes and constructor functions.
 
 ```ts
 interface ExampleInterface {
@@ -160,9 +136,13 @@ interface ExampleInterface {
 }
 ```
 
-A class has two types: the type of the static side and the type of the instance
-side. The constructor sits in the static side, when a class implements an
-interface, only the instance side of the class is checked.
+A class has two types:
+
+- The type of the static side
+- The type of the instance side
+
+The constructor sits in the static side, when a class implements an interface,
+only the instance side of the class is checked.
 
 ```ts
 interface ClockInterface {
@@ -199,7 +179,7 @@ let clockClassDeclaration = createClock(ClockB, 12, 17);
 
 ## Type Literal Syntax
 
-Typically used in the signature of a higher-order function
+Typically used in the signature of a higher-order function.
 
 ```ts
 type MyFunctionType = (name: string) => number;
@@ -211,16 +191,17 @@ type MyFunctionType = (name: string) => number;
 
 ## Excess Properties (⛔ Inconsistency)
 
-TypeScript is a **structurally** typed language. This means that to create a
-`Dog` you don’t need to explicitly extend the `Dog` interface. Instead any
-object with a `breed` property that is of type `string` can be used as a `Dog`
-(see example below).
+In-line object arguments receive an additional level of validation that doesn’t
+apply when they’re passed as variables.
 
-Engineers **can’t** just think of interfaces as “objects that have exactly a set
-of properties” or “objects that have at least a set of properties”.
+- Engineers **can’t** just think of interfaces as “objects that have exactly a
+  set of properties” or “objects that have at least a set of properties”
 
-> Inline object arguments receive an additional level of validation that doesn’t
-> apply when they’re passed as variables.
+- TypeScript is a **structurally** typed language. To create a `Dog` you don’t
+  need to explicitly extend the `Dog` interface, any object with a `breed`
+  property that is of type `string` can be used as a `Dog`:
+
+<!-- end list -->
 
 ```ts
 interface Dog {
@@ -247,7 +228,7 @@ printDog({
 
 # Mapped Types - Getting Types from Data
 
-## Using `typeof` / `keyof`
+## `typeof` / `keyof` Examples
 
 ```ts
 const data = {
@@ -298,7 +279,7 @@ type CurrencySymbol = keyof typeof currencySymbols;
 // type CurrencySymbol = "GBP" | "USD" | "EUR"
 ```
 
-## Using `keyof` with Generics and Interfaces
+## `keyof` with Generics and Interfaces Example
 
 ```ts
 interface HasPhoneNumber {
@@ -418,8 +399,10 @@ let y = [10, 20] as const;
 let z = { text: "hello" } as const;
 ```
 
-⛔ `const` contexts **don’t** immediately convert an expression to be fully
-immutable.
+- ⛔ `const` contexts **don’t** immediately convert an expression to be fully
+  immutable.
+
+<!-- end list -->
 
 ```ts
 let arr = [1, 2, 3, 4];
@@ -467,11 +450,13 @@ type User = {
 };
 ```
 
-In JavaScript, every function parameter is optional, when left off their value
-is `undefined`. We can get this functionality in TypeScript by adding a `?` to
-the end of parameters we want to be optional. This is different from adding
-`| undefined` which requires the parameter to be explicitly passed as
-`undefined`
+- In JavaScript, every function parameter is optional, when left off their value
+  is `undefined`.
+- We can get this functionality in TypeScript by adding a `?` to the end of
+  parameters we want to be optional. This is different from adding `| undefined`
+  which requires the parameter to be explicitly passed as `undefined`
+
+<!-- end list -->
 
 ```ts
 function fn1(x: number | undefined): void {
@@ -488,7 +473,7 @@ fn1(undefined); // OK
 fn2(undefined); // OK
 ```
 
-Type guard needed to check if Object is possibly `null`
+Type guard needed to check if Object is possibly `null`:
 
 ```ts
 function getLength(s: string | null) {
@@ -584,9 +569,9 @@ const username =
 ## `unknown`
 
 `unknown` is the type-safe counterpart of the `any` type: we have to do some
-form of checking before performing most operations on values of type `unknown`
+form of checking before performing most operations on values of type `unknown`.
 
-### Reading `JSON` from `localStorage` using `unknown`
+### Reading `JSON` from `localStorage` using `unknown` Example
 
 ```ts
 type Result =
@@ -765,7 +750,8 @@ function area(s: Shape) {
 
 ## `?.` returns `undefined` when hitting a `null` or `undefined`
 
-Album where the artist, and the artists bio might not be present in the data.
+Album where the artist, and the artists biography might not be present in the
+data.
 
 ```ts
 type AlbumAPIResponse = {
