@@ -2,9 +2,9 @@
 - [Typing Objects](#typing-objects)
   - [`Object` Versus `object`](#object-versus-object)
   - [Interface Signatures Overview](#interface-signatures-overview)
-  - [Index Signature](#index-signature)
-  - [Call Signature](#call-signature)
-  - [Construct Signature](#construct-signature)
+    - [Index Signature](#index-signature)
+    - [Call Signature](#call-signature)
+    - [Construct Signature](#construct-signature)
   - [Type Literal Syntax](#type-literal-syntax)
   - [Excess Properties (⛔ Inconsistency)](#excess-properties-inconsistency)
 - [Mapped Types - Getting Types from Data](#mapped-types---getting-types-from-data)
@@ -82,7 +82,7 @@ interface ExampleInterface {
 }
 ```
 
-## Index Signature
+### Index Signature
 
 Helps to describe Arrays or objects that are used as dictionaries.
 
@@ -109,7 +109,7 @@ interface I2 {
 }
 ```
 
-## Call Signature
+### Call Signature
 
 Enables interfaces to describe functions, `this` is the optional calling context
 of the function in this example:
@@ -126,7 +126,7 @@ const myListener: ClickListener = e => {
 addEventListener("click", myListener);
 ```
 
-## Construct Signature
+### Construct Signature
 
 Enables describing classes and constructor functions.
 
