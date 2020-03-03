@@ -773,6 +773,17 @@ const maybeArtistBioElement = album?.["artist"]?.["bio"];
 const maybeFirstPreviousAlbum = album?.artist?.previousAlbums?.[0];
 ```
 
+Optional chaining on an optional function:
+
+```ts
+interface OptionalFunction {
+  bar?: () => number;
+}
+
+const foo: OptionalFunction = {};
+const bat = foo.bar?.(); // number | undefined
+```
+
 # Nullish Coalescing
 
 ## `??` “fall Backs” to a Default Value When Dealing with `null` or `undefined`
