@@ -537,6 +537,30 @@ function doSomething(callback?: () => void) {
 }
 ```
 
+## Strict Bind Call Apply
+
+`--strictBindCallApply`
+
+> The `call()` method calls a function with a given `this` value and arguments
+> provided individually, while `apply()` accepts a single array of arguments.
+>
+> The `bind()` method creates a new function that, when called, has its `this`
+> keyword set to the provided value.
+
+When set, TypeScript will check that the built-in methods of functions `call`,
+`bind`, and `apply` are invoked with correct argument for the underlying
+function:
+
+```ts
+// With strictBindCallApply on
+function fn(x: string) {
+  return parseInt(x);
+}
+
+const n1 = fn.call(undefined, "10"); // OK
+const n2 = fn.call(undefined, false); // Argument of type 'false' is not assignable to parameter of type 'string'.
+```
+
 ## Strict Class Property Initialization
 
 `--strictPropertyInitialization`
