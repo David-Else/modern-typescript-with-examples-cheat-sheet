@@ -419,26 +419,26 @@ foo.contents.push(5); // ...works!
 
 # Strict Mode
 
-```json
+```json5
 {
-  "compilerOptions": {
-    "strict": true /* Enable all strict type-checking options. */
+  compilerOptions: {
+    strict: true /* Enable all strict type-checking options. */
   }
 }
 ```
 
 is equivalent to enabling all of the strict mode family options:
 
-```json
+```json5
 {
-  "compilerOptions": {
-    "noImplicitAny": true /* Raise error on expressions and declarations with an implied 'any' type. */,
-    "strictNullChecks": true /* Enable strict null checks. */,
-    "strictFunctionTypes": true /* Enable strict checking of function types. */,
-    "strictBindCallApply": true /* Enable strict 'bind', 'call', and 'apply' methods on functions. */,
-    "strictPropertyInitialization": true /* Enable strict checking of property initialization in classes. */,
-    "noImplicitThis": true /* Raise error on 'this' expressions with an implied 'any' type. */,
-    "alwaysStrict": true /* Parse in strict mode and emit "use strict" for each source file. */
+  compilerOptions: {
+    noImplicitAny: true /* Raise error on expressions and declarations with an implied 'any' type. */,
+    strictNullChecks: true /* Enable strict null checks. */,
+    strictFunctionTypes: true /* Enable strict checking of function types. */,
+    strictBindCallApply: true /* Enable strict 'bind', 'call', and 'apply' methods on functions. */,
+    strictPropertyInitialization: true /* Enable strict checking of property initialization in classes. */,
+    noImplicitThis: true /* Raise error on 'this' expressions with an implied 'any' type. */,
+    alwaysStrict: true /* Parse in strict mode and emit "use strict" for each source file. */
   }
 }
 ```
