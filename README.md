@@ -1,3 +1,5 @@
+<article class="markdown-body">
+
 - [**Modern Typescript with Examples Cheat Sheet**](#modern-typescript-with-examples-cheat-sheet)
 - [Typing Objects](#typing-objects)
   - [`Object` Versus `object`](#object-versus-object)
@@ -82,6 +84,8 @@ interface ExampleInterface {
 }
 ```
 
+<div style="page-break-after: always;"></div>
+
 ### Index Signature
 
 Helps to describe Arrays or objects that are used as dictionaries.
@@ -126,17 +130,11 @@ const myListener: ClickListener = e => {
 addEventListener("click", myListener);
 ```
 
+<div style="page-break-after: always;"></div>
+
 ### Construct Signature
 
-Enables describing classes and constructor functions.
-
-```ts
-interface ExampleInterface {
-  new (x: string): ExampleInstance;
-}
-```
-
-A class has two types:
+Enables describing classes and constructor functions. A class has two types:
 
 - The type of the static side
 - The type of the instance side
@@ -177,6 +175,8 @@ function createClock(
 let clockClassDeclaration = createClock(ClockB, 12, 17);
 ```
 
+<div style="page-break-after: always;"></div>
+
 ## Type Literal Syntax
 
 Typically used in the signature of a higher-order function.
@@ -184,10 +184,6 @@ Typically used in the signature of a higher-order function.
 ```ts
 type MyFunctionType = (name: string) => number;
 ```
-
-<div style="page-break-after: always;">
-
-</div>
 
 ## Excess Properties (⛔ Inconsistency)
 
@@ -224,6 +220,8 @@ printDog({
 });
 // excess properties are NOT OK!! Argument of type '{ breed: string; age: number; }' is not assignable..
 ```
+
+<div style="page-break-after: always;"></div>
 
 # Mapped Types - Getting Types from Data
 
@@ -311,6 +309,8 @@ contact("fax", { fax: 1231 });
 type AllCommKeys = keyof CommunicationMethods;
 type AllCommValues = CommunicationMethods[keyof CommunicationMethods];
 ```
+
+<div style="page-break-after: always;"></div>
 
 # Immutability
 
@@ -942,3 +942,5 @@ function yell(str: any) {
 [Shu Uesugi - TypeScript for Beginner Programmers](https://ts.chibicode.com/)
 
 [Dr. Axel Rauschmayer - 2ality](https://2ality.com/index.html)
+
+</article>
