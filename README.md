@@ -13,13 +13,14 @@
   - [`typeof` / `keyof` Examples](#typeof-keyof-examples)
   - [`keyof` with Generics and Interfaces Example](#keyof-with-generics-and-interfaces-example)
 - [Immutability](#immutability)
-  - [`readonly` Array / Tuple](#readonly-array-tuple)
   - [`readonly` Properties](#readonly-properties)
   - [`readonly` Class Properties](#readonly-class-properties)
+  - [`readonly` Array / Tuple](#readonly-array-tuple)
   - [`const` Assertions](#const-assertions)
 - [Strict Mode](#strict-mode)
-  - [Non-Nullable Types](#non-nullable-types)
-  - [Strict Class Property Initialization](#strict-class-property-initialization)
+  - [Non-Nullable Types `--strictNullChecks`](#non-nullable-types---strictnullchecks)
+  - [Strict Bind Call Apply `--strictBindCallApply`](#strict-bind-call-apply---strictbindcallapply)
+  - [Strict Class Property Initialization `--strictPropertyInitialization`](#strict-class-property-initialization---strictpropertyinitialization)
 - [Types](#types)
   - [`unknown`](#unknown)
     - [Reading `JSON` from `localStorage` using `unknown` Example](#reading-json-from-localstorage-using-unknown-example)
@@ -74,7 +75,7 @@ fn("foo"); // Error: "foo" is a primitive
 ```ts
 interface ExampleInterface {
   myProperty: boolean; // Property signature
-  myMethod(x: string): void; // Method signature, ⛔ param names for documentation only
+  myMethod(x: string): void; // Method signature, 'x' for documentation only
   [prop: string]: any; // Index signature
   (x: number): string; // Call signature
   new (x: string): ExampleInstance; // Construct signature
@@ -84,7 +85,9 @@ interface ExampleInterface {
 }
 ```
 
-<div style="page-break-after: always;"></div>
+<div style="page-break-after: always;">
+
+</div>
 
 ### Index Signature
 
@@ -100,10 +103,10 @@ Helps to describe Arrays or objects that are used as dictionaries.
 interface I1 {
   [key: string]: boolean;
 
-  //@ts-ignore: Property 'myProp' of type 'number' is not assignable to string index type 'boolean'.(2411)
+  // Property 'myProp' of type 'number' is not assignable to string index type 'boolean'
   myProp: number;
 
-  //@ts-ignore: Property 'myMethod' of type '() => string' is not assignable to string index type 'boolean'.(2411)
+  // Property 'myMethod' of type '() => string' is not assignable to string index type 'boolean'
   myMethod(): string;
 }
 
@@ -130,7 +133,9 @@ const myListener: ClickListener = e => {
 addEventListener("click", myListener);
 ```
 
-<div style="page-break-after: always;"></div>
+<div style="page-break-after: always;">
+
+</div>
 
 ### Construct Signature
 
@@ -175,7 +180,9 @@ function createClock(
 let clockClassDeclaration = createClock(ClockB, 12, 17);
 ```
 
-<div style="page-break-after: always;"></div>
+<div style="page-break-after: always;">
+
+</div>
 
 ## Type Literal Syntax
 
@@ -218,10 +225,13 @@ printDog({
   breed: "Airedale",
   age: 3
 });
-// excess properties are NOT OK!! Argument of type '{ breed: string; age: number; }' is not assignable..
+// Excess properties are NOT OK!!
+// Argument of type '{ breed: string; age: number; }' is not assignable...
 ```
 
-<div style="page-break-after: always;"></div>
+<div style="page-break-after: always;">
+
+</div>
 
 # Mapped Types - Getting Types from Data
 
@@ -241,14 +251,12 @@ type Data = typeof data;
 // text: string;
 // subData: {
 //   value: boolean;
-//
 }
 ```
 
 ```ts
 const data = ["text 1", "text 2"] as const;
-type Data = typeof data[number];
-// type Data = "text 1" | "text 2"
+type Data = typeof data[number]; // "text 1" | "text 2"
 ```
 
 ```ts
@@ -262,8 +270,7 @@ const locales = [
     language: "English"
   }
 ] as const;
-type Locale = typeof locales[number]["locale"];
-// type Locale = "se" | "en"
+type Locale = typeof locales[number]["locale"]; // "se" | "en"
 ```
 
 ```ts
@@ -272,9 +279,12 @@ const currencySymbols = {
   USD: "$",
   EUR: "€"
 };
-type CurrencySymbol = keyof typeof currencySymbols;
-// type CurrencySymbol = "GBP" | "USD" | "EUR"
+type CurrencySymbol = keyof typeof currencySymbols; // "GBP" | "USD" | "EUR"
 ```
+
+<div style="page-break-after: always;">
+
+</div>
 
 ## `keyof` with Generics and Interfaces Example
 
@@ -310,16 +320,11 @@ type AllCommKeys = keyof CommunicationMethods;
 type AllCommValues = CommunicationMethods[keyof CommunicationMethods];
 ```
 
-<div style="page-break-after: always;"></div>
+<div style="page-break-after: always;">
+
+</div>
 
 # Immutability
-
-## `readonly` Array / Tuple
-
-```ts
-const array: readonly string[];
-const tuple: readonly [string, string];
-```
 
 ## `readonly` Properties
 
@@ -365,6 +370,17 @@ class Circle {
     return Math.PI * this.radius ** 2;
   }
 }
+```
+
+<div style="page-break-after: always;">
+
+</div>
+
+## `readonly` Array / Tuple
+
+```ts
+const array: readonly string[];
+const tuple: readonly [string, string];
 ```
 
 ## `const` Assertions
@@ -417,37 +433,31 @@ foo.contents = []; // Error!
 foo.contents.push(5); // ...works!
 ```
 
+<div style="page-break-after: always;">
+
+</div>
+
 # Strict Mode
 
-```json5
-{
-  compilerOptions: {
-    strict: true /* Enable all strict type-checking options. */
-  }
-}
+```json
+  strict: true /* Enable all strict type-checking options. */
 ```
 
 is equivalent to enabling all of the strict mode family options:
 
-```json5
-{
-  compilerOptions: {
-    noImplicitAny: true /* Raise error on expressions and declarations with an implied 'any' type. */,
-    strictNullChecks: true /* Enable strict null checks. */,
-    strictFunctionTypes: true /* Enable strict checking of function types. */,
-    strictBindCallApply: true /* Enable strict 'bind', 'call', and 'apply' methods on functions. */,
-    strictPropertyInitialization: true /* Enable strict checking of property initialization in classes. */,
-    noImplicitThis: true /* Raise error on 'this' expressions with an implied 'any' type. */,
-    alwaysStrict: true /* Parse in strict mode and emit "use strict" for each source file. */
-  }
-}
+```json
+  noImplicitAny: true /* Raise error on expressions and declarations with an implied 'any' type */,
+  strictNullChecks: true /* Enable strict null checks */,
+  strictFunctionTypes: true /* Enable strict checking of function types */,
+  strictBindCallApply: true /* Enable strict 'bind', 'call', and 'apply' methods on functions */,
+  strictPropertyInitialization: true /* Enable strict checking of property initialization in classes */,
+  noImplicitThis: true /* Raise error on 'this' expressions with an implied 'any' type */,
+  alwaysStrict: true /* Parse in strict mode and emit "use strict" for each source file */
 ```
 
 You can then turn off individual strict mode family checks as needed.
 
-## Non-Nullable Types
-
-`--strictNullChecks`
+## Non-Nullable Types `--strictNullChecks`
 
 In strict null checking mode, `null` and `undefined` are no longer assignable to
 every type.
@@ -483,6 +493,10 @@ type User = {
 
 <!-- end list -->
 
+<div style="page-break-after: always;">
+
+</div>
+
 ```ts
 function fn1(x: number | undefined): void {
   x;
@@ -512,7 +526,6 @@ function getLength(s: string | null) {
   if (s === null) {
     return 0;
   }
-
   return s.length;
 }
 
@@ -537,9 +550,11 @@ function doSomething(callback?: () => void) {
 }
 ```
 
-## Strict Bind Call Apply
+<div style="page-break-after: always;">
 
-`--strictBindCallApply`
+</div>
+
+## Strict Bind Call Apply `--strictBindCallApply`
 
 > The `call()` method calls a function with a given `this` value and arguments
 > provided individually, while `apply()` accepts a single array of arguments.
@@ -561,9 +576,7 @@ const n1 = fn.call(undefined, "10"); // OK
 const n2 = fn.call(undefined, false); // Argument of type 'false' is not assignable to parameter of type 'string'.
 ```
 
-## Strict Class Property Initialization
-
-`--strictPropertyInitialization`
+## Strict Class Property Initialization `--strictPropertyInitialization`
 
 Verify that each instance property declared in a class either:
 
