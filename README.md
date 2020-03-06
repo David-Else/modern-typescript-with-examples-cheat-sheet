@@ -22,13 +22,14 @@
   - [Strict Bind Call Apply `--strictBindCallApply`](#strict-bind-call-apply---strictbindcallapply)
   - [Strict Class Property Initialization `--strictPropertyInitialization`](#strict-class-property-initialization---strictpropertyinitialization)
 - [Types](#types)
+  - [`never`](#never)
   - [`unknown`](#unknown)
     - [Reading `JSON` from `localStorage` using `unknown` Example](#reading-json-from-localstorage-using-unknown-example)
-  - [`never`](#never)
 - [Generics](#generics)
   - [With and Without Type Argument Inference](#with-and-without-type-argument-inference)
   - [Using More Than One Type Argument](#using-more-than-one-type-argument)
   - [Higher Order Function with `Parameters<T>` and `ReturnType<T>`](#higher-order-function-with-parameterst-and-returntypet)
+  - [Advanced Factory using `ConstructorParameters<T>` and `InstanceType<T>`](#advanced-factory-using-constructorparameterst-and-instancetypet)
 - [Discriminated Unions](#discriminated-unions)
   - [Exhaustive Pattern Matching Using `never`](#exhaustive-pattern-matching-using-never)
 - [Optional Chaining](#optional-chaining)
@@ -103,16 +104,16 @@ Helps to describe Arrays or objects that are used as dictionaries.
 interface I1 {
   [key: string]: boolean;
 
-  // Property 'myProp' of type 'number' is not assignable to string index type 'boolean'
+  // 'number' is not assignable to string index type 'boolean'
   myProp: number;
 
-  // Property 'myMethod' of type '() => string' is not assignable to string index type 'boolean'
+  // '() => string' is not assignable to string index type 'boolean'
   myMethod(): string;
 }
 
 interface I2 {
   [key: string]: number;
-  myProp: number; // NO errors
+  myProp: number; // OK
 }
 ```
 
@@ -307,7 +308,7 @@ interface CommunicationMethods {
 
 function contact<K extends keyof CommunicationMethods>(
   method: K,
-  contact: CommunicationMethods[K] // 💡turning key into value -- a *mapped type*
+  contact: CommunicationMethods[K] // turning key into value - a mapped type
 ) {
   //...
 }
@@ -427,10 +428,10 @@ let foo = {
   contents: arr
 } as const;
 
-foo.name = "bar"; // Error!
-foo.contents = []; // Error!
+foo.name = "bar"; // Error
+foo.contents = []; // Error
 
-foo.contents.push(5); // ...works!
+foo.contents.push(5); // OK
 ```
 
 <div style="page-break-after: always;">
@@ -558,22 +559,19 @@ function doSomething(callback?: () => void) {
 
 > The `call()` method calls a function with a given `this` value and arguments
 > provided individually, while `apply()` accepts a single array of arguments.
->
-> The `bind()` method creates a new function that, when called, has its `this`
-> keyword set to the provided value.
+> The `bind()` method creates a new function.
 
 When set, TypeScript will check that the built-in methods of functions `call`,
 `bind`, and `apply` are invoked with correct argument for the underlying
 function:
 
 ```ts
-// With strictBindCallApply on
 function fn(x: string) {
   return parseInt(x);
 }
 
 const n1 = fn.call(undefined, "10"); // OK
-const n2 = fn.call(undefined, false); // Argument of type 'false' is not assignable to parameter of type 'string'.
+const n2 = fn.call(undefined, false); // `false` is not assignable to parameter of type `string`
 ```
 
 ## Strict Class Property Initialization `--strictPropertyInitialization`
@@ -588,8 +586,7 @@ Verify that each instance property declared in a class either:
 ```ts
 // Error
 class User {
-  // Type error: Property 'username' has no initializer
-  // and is not definitely assigned in the constructor
+  // 'username' has no initializer & not definitely assigned in constructor
   username: string;
 }
 
@@ -610,6 +607,10 @@ const user = new User("mariusschulz");
 const username = user.username.toLowerCase();
 ```
 
+<div style="page-break-after: always;">
+
+</div>
+
 - Has a type that includes undefined
 
 <!-- end list -->
@@ -621,12 +622,39 @@ class User {
 
 const user = new User();
 
-// Whenever we want to use the username property as a string, though, we first have to make sure that it actually holds a string and not the value undefined
+// Whenever we want to use the username property as a string, we first have
+// to make sure that it actually holds a string, not the value undefined
 const username =
   typeof user.username === "string" ? user.username.toLowerCase() : "n/a";
 ```
 
 # Types
+
+## `never`
+
+`never` represents the type of values that never occur. It is used in the
+following two places:
+
+- As the return type of functions that never return
+- As the type of variables under type guards that are never true
+
+`never` can be used in control flow analysis:
+
+```ts
+function controlFlowAnalysisWithNever(value: string | number) {
+  if (typeof value === "string") {
+    value; // Type string
+  } else if (typeof value === "number") {
+    value; // Type number
+  } else {
+    value; // Type never
+  }
+}
+```
+
+<div style="page-break-after: always;">
+
+</div>
 
 ## `unknown`
 
@@ -671,32 +699,11 @@ function tryDeserializeLocalStorageItem(key: string): Result {
 }
 ```
 
-## `never`
+<div style="page-break-after: always;">
 
-`never` represents the type of values that never occur. It is used in the
-following two places:
-
-- As the return type of functions that never return
-- As the type of variables under type guards that are never true
-
-`never` can be used in control flow analysis:
-
-```ts
-function controlFlowAnalysisWithNever(value: string | number) {
-  if (typeof value === "string") {
-    value; // Type string
-  } else if (typeof value === "number") {
-    value; // Type number
-  } else {
-    value; // Type never
-  }
-}
-```
+</div>
 
 # Generics
-
-Generics enable you to create reusable code components that work with a number
-of types instead of a single type.
 
 ## With and Without Type Argument Inference
 
@@ -705,13 +712,11 @@ function identity<T>(arg: T): T {
   return arg;
 }
 
-let output = identity<string>("myString"); // type of output will be 'string'
-let output = identity("myString"); // The compiler sets the value of `T` based on the type of the argument we pass in
+let output = identity<string>("myString"); // Type of output is 'string'
+let output = identity("myString"); // The compiler sets the value of `T`
 ```
 
 ## Using More Than One Type Argument
-
-No value arguments are needed in this case:
 
 ```ts
 function makePair<F, S>() {
@@ -729,18 +734,17 @@ function makePair<F, S>() {
   }
   return { getPair, setPair };
 }
-
-// Creates a (number, string) pair
-const { getPair, setPair } = makePair<number, string>();
-// Must pass (number, string)
-setPair(1, "y");
+const { getPair, setPair } = makePair<number, string>(); // Creates a pair
+setPair(1, "y"); // Must pass (number, string)
 ```
+
+<div style="page-break-after: always;">
+
+</div>
 
 ## Higher Order Function with `Parameters<T>` and `ReturnType<T>`
 
 ```ts
-// Input a function `<T extends (...args: any[]) => any>`
-// Output a function with same params and return type `:(...funcArgs: Parameters<T>) => ReturnType<T>`
 function logDuration<T extends (...args: any[]) => any>(func: T) {
   const funcName = func.name;
 
@@ -761,6 +765,33 @@ const addNumbersWithLogging = logDuration(addNumbers);
 
 addNumbersWithLogging(5, 3);
 ```
+
+## Advanced Factory using `ConstructorParameters<T>` and `InstanceType<T>`
+
+```ts
+class Hero {
+  constructor(public point: [number, number]) {}
+}
+
+const entities = [];
+
+const entityFactory = <
+  T extends {
+    new (...args: any[]): any;
+  }
+>(
+  classToCreate: T,
+  numberOf: number,
+  ...args: ConstructorParameters<T>
+): InstanceType<T>[] =>
+  [...Array(numberOf)].map(() => new classToCreate(...args));
+
+entities.push(...entityFactory(Hero, 10, [12, 10]));
+```
+
+<div style="page-break-after: always;">
+
+</div>
 
 # Discriminated Unions
 
@@ -803,10 +834,15 @@ function area(s: Shape) {
     case "circle":
       return Math.PI * s.radius ** 2;
     default:
-      return assertNever(s); // Argument of type 'Triangle' is not assignable to parameter of type 'never'.
+      return assertNever(s); // Error
+    // Argument of type 'Triangle' not assignable to param of type 'never'
   }
 }
 ```
+
+<div style="page-break-after: always;">
+
+</div>
 
 # Optional Chaining
 
@@ -828,7 +864,7 @@ type AlbumAPIResponse = {
 // Instead of:
 const maybeArtistBio = album.artist && album.artist.bio;
 
-// ?. acts differently than the &&s since && will act differently on "falsy" values (e.g. an empty string, 0, NaN, and false).
+// ?. acts differently than && on "falsy" values: empty string, 0, NaN, false
 const artistBio = album?.artist?.bio;
 
 // optional chaining also works with the [] operators when accessing elements
@@ -847,6 +883,10 @@ const foo: OptionalFunction = {};
 const bat = foo.bar?.(); // number | undefined
 ```
 
+<div style="page-break-after: always;">
+
+</div>
+
 # Nullish Coalescing
 
 ## `??` “fall Backs” to a Default Value When Dealing with `null` or `undefined`
@@ -856,9 +896,7 @@ Value `foo` will be used when it’s “present”; but when it’s `null` or
 
 ```ts
 let x = foo ?? bar();
-
 // instead of
-
 let x = foo !== null && foo !== undefined ? foo : bar();
 ```
 
@@ -884,9 +922,7 @@ being passed in.
 function yell(str) {
   assert(typeof str === "string");
 
-  return str.toUppercase();
-  // Oops! We misspelled 'toUpperCase'.
-  // Would be great if TypeScript still caught this!
+  return str.toUppercase(); // Oops! We misspelled 'toUpperCase'
 }
 ```
 
@@ -901,6 +937,10 @@ function yell(str) {
   return str.toUppercase();
 }
 ```
+
+<div style="page-break-after: always;">
+
+</div>
 
 ## Assertion Function Style 1 - Check for a Condition
 
