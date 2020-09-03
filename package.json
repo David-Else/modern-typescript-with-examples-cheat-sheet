@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "test": "eslint ."
+    "lint": "eslint README.md"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.0.1",
