@@ -162,7 +162,7 @@ const ClockA: ClockConstructor = class Clock implements ClockInterface {
   tick() {}
 };
 
-let clockClassExpression = new ClockA(18, 11);
+const clockClassExpression = new ClockA(18, 11);
 
 // Using Class Declaration with a Constructor Function
 class ClockB implements ClockInterface {
@@ -178,7 +178,7 @@ function createClock(
   return new ctor(hour, minute);
 }
 
-let clockClassDeclaration = createClock(ClockB, 12, 17);
+const clockClassDeclaration = createClock(ClockB, 12, 17);
 ```
 
 <div style="page-break-after: always;">
@@ -252,7 +252,7 @@ type Data = typeof data;
 // text: string;
 // subData: {
 //   value: boolean;
-}
+// }
 ```
 
 ```ts
@@ -907,7 +907,7 @@ which is unintended. `??` avoids some unintended behaviour from `0`, `NaN` and
 
 ```ts
 function initializeAudio() {
-  let volume = localStorage.volume || 0.5; // Potential bug
+  const volume = localStorage.volume || 0.5; // Potential bug
 }
 ```
 

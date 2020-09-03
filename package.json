@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "scripts": {
+    "test": "eslint ."
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "@typescript-eslint/parser": "^4.0.1",
+    "eslint-plugin-markdown": "^2.0.0-rc.0",
+    "eslint": "^7.8.1",
+    "typescript": "^4.0.2"
+  }
+}
