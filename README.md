@@ -1,6 +1,6 @@
 <article class="markdown-body">
 
-- [**Modern Typescript with Examples Cheat Sheet**](#modern-typescript-with-examples-cheat-sheet)
+- [**Modern TypeScript with Examples Cheat Sheet**](#modern-typescript-with-examples-cheat-sheet)
 - [Typing Objects](#typing-objects)
   - [`Object` Versus `object`](#object-versus-object)
   - [Interface Signatures Overview](#interface-signatures-overview)
@@ -40,9 +40,9 @@
   - [A Standard JavaScript `Assert()` Doesn’t Work for Type Checking](#a-standard-javascript-assert-doesnt-work-for-type-checking)
   - [Using `if` and `typeof` Everywhere is Bloat](#using-if-and-typeof-everywhere-is-bloat)
   - [Assertion Function Style 1 - Check for a Condition](#assertion-function-style-1---check-for-a-condition)
-  - [Assertion Function Style 2 - Tell Typescript That a Specific Variable or Property Has a Different Type](#assertion-function-style-2---tell-typescript-that-a-specific-variable-or-property-has-a-different-type)
+  - [Assertion Function Style 2 - Tell TypeScript That a Specific Variable or Property Has a Different Type](#assertion-function-style-2---tell-typescript-that-a-specific-variable-or-property-has-a-different-type)
 
-# **Modern Typescript with Examples Cheat Sheet**
+# **Modern TypeScript with Examples Cheat Sheet**
 
 # Typing Objects
 
@@ -961,7 +961,7 @@ function yell(str) {
 }
 ```
 
-## Assertion Function Style 2 - Tell Typescript That a Specific Variable or Property Has a Different Type
+## Assertion Function Style 2 - Tell TypeScript That a Specific Variable or Property Has a Different Type
 
 Very similar to writing type predicate signatures.
 
